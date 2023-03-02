@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Header from "./components/Header";
 import "./styles/App.scss";
 import successImage from "./assets/success-image.png";
+import Button from "./components/Button";
 
 function App() {
 	const [users, setUsers] = useState([]);
@@ -10,7 +11,15 @@ function App() {
 	const [loading, setLoading] = useState(true);
 	const [photo, setPhoto] = useState(null);
 	const [token, setToken] = useState("");
-	console.log("users>>", users);
+	const [clicked, setClicked] = useState(false);
+	const [sendingData, setSendingData] = useState(false);
+
+	const handleClick = () => {
+		if (sendingData) {
+			setClicked(true);
+		}
+	};
+	// console.log("users>>", users);
 	//get data
 
 	fetch("https://frontend-test-assignment-api.abz.agency/api/v1/token")
@@ -71,6 +80,7 @@ function App() {
 
 	function submit(e) {
 		e.preventDefault();
+		setSendingData(true);
 		// const selectedPhoto = e.target.files[0];
 		fetch("https://frontend-test-assignment-api.abz.agency/api/v1/users", {
 			method: "POST",
@@ -109,10 +119,6 @@ function App() {
 			if (value.length < 2 || value.length > 60) {
 				return;
 			}
-			// } else if (id === "position") {
-			// 	if (value.length < 2 || value.length > 60) {
-			// 		return;
-			// 	}
 		} else if (id === "email") {
 			const emailRegex = new RegExp(
 				"^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])$"
@@ -158,11 +164,27 @@ function App() {
 	}
 	return (
 		<div className="home">
+			<Header />
 			<div className="wrapper">
-				<Header />
-
+				<div className="mainImg-wrapper">
+					<div className="main_img-text">
+						<div>
+							<h2>Test assignment for front-end developer</h2>
+							<p>
+								What defines a good front-end developer is one
+								that has skilled knowledge of HTML, CSS, JS with
+								a vast understanding of User design thinking as
+								they'll be building web interfaces with
+								accessibility in mind. They should also be
+								excited to learn, as the world of Front-End
+								Development keeps evolving.
+							</p>
+							<Button value="Sign up" />
+						</div>
+					</div>
+				</div>
 				<main className="main">
-					<h2>Working with GET request</h2>
+					<h2 className="get-title">Working with GET request</h2>
 					{loading ? (
 						<p>Loading...</p>
 					) : (
@@ -174,29 +196,33 @@ function App() {
 										src={user.photo}
 										alt=""
 									/>
-									<p>{user.name}</p>
-									<p>{user.position}</p>
-									<p>{user.email}</p>
-									<p>{user.phone}</p>
+									<p className="cards-name">{user.name}</p>
+									<p className="cards-position">
+										{user.position}
+									</p>
+									<p className="cards-email">{user.email}</p>
+									<p className="cards-phone">{user.phone}</p>
 								</li>
 							))}
-							{users.length > visibleUsers && (
-								<button
-									onClick={() =>
-										setVisibleUsers(visibleUsers + 6)
-									}
-								>
-									Show more
-								</button>
-							)}
 						</ul>
 					)}
+					{users.length > visibleUsers && (
+						<div className="btn-wrapper">
+							<Button
+								className="show_more-btn"
+								value="Show more"
+								onClick={() =>
+									setVisibleUsers(visibleUsers + 6)
+								}
+							></Button>
+						</div>
+					)}
 
-					<h2>Working with POST request</h2>
+					<h2 className="post-title">Working with POST request</h2>
 
-					<form onSubmit={(e) => submit(e)}>
-						<label htmlFor="name">Your name:</label>
+					<form className="form" onSubmit={(e) => submit(e)}>
 						<input
+							className="input"
 							onChange={(e) => handle(e)}
 							value={formData.name}
 							type="text"
@@ -208,8 +234,8 @@ function App() {
 							title="Username should contain 2-60 characters"
 						/>
 
-						<label htmlFor="email">Email:</label>
 						<input
+							className="input"
 							onChange={(e) => handle(e)}
 							value={formData.email}
 							type="email"
@@ -218,8 +244,8 @@ function App() {
 							required
 						/>
 
-						<label htmlFor="phone">Phone:</label>
 						<input
+							className="input"
 							onChange={(e) => handle(e)}
 							value={formData.phone}
 							type="tel"
@@ -230,8 +256,8 @@ function App() {
 							title="Please enter a valid phone number (at least 10 digits)"
 						/>
 
-						<label htmlFor="position">Position:</label>
 						<input
+							className="input"
 							onChange={(e) => handle(e)}
 							value={formData.position}
 							type="text"
@@ -243,8 +269,8 @@ function App() {
 							title="Position should contain 2-60 characters"
 						/>
 
-						<label htmlFor="photo-upload">Upload photo:</label>
 						<input
+							className="input"
 							type="file"
 							accept="image/jpeg, image/jpg"
 							onChange={(e) => handle(e)}
@@ -258,7 +284,13 @@ function App() {
 							</button>
 						)}
 
-						<button type="submit">Submit</button>
+						{/* <button type="submit">Submit</button> */}
+						<Button
+							onClick={handleClick}
+							type="submit"
+							value="Submit"
+							className={`${clicked ? "yellow-bg" : "gray-bg"}`}
+						></Button>
 					</form>
 
 					{successForm && (
