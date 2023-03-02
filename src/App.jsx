@@ -4,6 +4,13 @@ import "./styles/App.scss";
 import successImage from "./assets/success-image.png";
 import Button from "./components/Button";
 
+const positions = [
+	{ id: 1, name: "Frontend Developer" },
+	{ id: 2, name: "Backend Developer" },
+	{ id: 3, name: "Designer" },
+	{ id: 4, name: "QA" },
+];
+
 function App() {
 	const [users, setUsers] = useState([]);
 	const [error, setError] = useState(null);
@@ -13,6 +20,11 @@ function App() {
 	const [token, setToken] = useState("");
 	const [clicked, setClicked] = useState(false);
 	const [sendingData, setSendingData] = useState(false);
+	const [selectedPosition, setSelectedPosition] = useState(null);
+
+	const handlePositionChange = (position) => {
+		setSelectedPosition(position.id);
+	};
 
 	const handleClick = () => {
 		if (sendingData) {
@@ -98,7 +110,7 @@ function App() {
 					name: "",
 					email: "",
 					phone: "",
-					position: "",
+					position: selectedPosition,
 					position_id: 1, // reset position_id field
 					photo: "",
 				});
@@ -232,6 +244,8 @@ function App() {
 							required
 							pattern=".{2,60}"
 							title="Username should contain 2-60 characters"
+							aria-label="name"
+							aria-describedby="name-help"
 						/>
 
 						<input
@@ -242,10 +256,12 @@ function App() {
 							placeholder="Email"
 							id="email"
 							required
+							aria-label="Email"
+							aria-describedby="email-help"
 						/>
 
 						<input
-							className="input"
+							className="input lastInput"
 							onChange={(e) => handle(e)}
 							value={formData.phone}
 							type="tel"
@@ -254,9 +270,16 @@ function App() {
 							required
 							pattern="^\+?\d{10,}$"
 							title="Please enter a valid phone number (at least 10 digits)"
+							aria-label="Phone number"
+							aria-describedby="phone-help"
 						/>
+						<label className="label-for-phone" htmlFor="phone">+38 (XXX) XXX - XX - XX</label>
 
-						<input
+						{/* <span className="phone-example">
+							+38 (XXX) XXX - XX - XX
+						</span> */}
+
+						{/* <input
 							className="input"
 							onChange={(e) => handle(e)}
 							value={formData.position}
@@ -267,7 +290,26 @@ function App() {
 							required
 							pattern=".{2,60}"
 							title="Position should contain 2-60 characters"
-						/>
+						/> */}
+						<div className="radio-btns">
+							<p>Select your position</p>
+							{positions.map((position) => (
+								<label key={position.id}>
+									<input
+										type="radio"
+										name="position"
+										value={position.id}
+										checked={
+											selectedPosition === position.id
+										}
+										onChange={() =>
+											handlePositionChange(position)
+										}
+									/>
+									{position.name}
+								</label>
+							))}
+						</div>
 
 						<input
 							className="input"

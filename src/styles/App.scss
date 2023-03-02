@@ -131,6 +131,7 @@
 	margin-top: 50px;
 }
 .form {
+	position: relative;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -146,7 +147,7 @@
 	font-family: "NUNITO";
 	color: #7e7e7e;
 	margin-bottom: 50px;
-	@media (max-width: 360px) {
+	@media (max-width: 480px) {
 		width: 308.4px;
 	}
 	@media (max-width: 355px) {
@@ -160,4 +161,39 @@
 
 .gray-bg {
 	background-color: #b4b4b4;
+}
+.radio-btns {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 50px;
+	margin-left: -205px;
+
+	@media (max-width: 480px) {
+		margin-left: -155px;
+	}
+	@media (max-width: 355px) {
+		margin-left: -105px;
+	}
+	p {
+		margin-bottom: 10px;
+	}
+}
+
+.lastInput {
+	margin-bottom: 4px;
+}
+.label-for-phone {
+	font-style: normal;
+	font-weight: 400;
+	font-size: 12px;
+	line-height: 14px;
+	color: #7e7e7e;
+	padding-right: 200px;
+	margin-bottom: 25px;
+	@media (max-width: 480px) {
+		padding-right: 165px;
+	}
+	@media (max-width: 355px) {
+		padding-right: 105px;
+	}
 }
