@@ -66,7 +66,7 @@ function App() {
 		phone: "",
 		position: "",
 		position_id: 1, // add position_id field
-		photo: "https://i.postimg.cc/qM6b1j85/image0.jpg",
+		photo: "",
 	});
 
 	function submit(e) {
@@ -90,7 +90,7 @@ function App() {
 					phone: "",
 					position: "",
 					position_id: 1, // reset position_id field
-					photo: "https://i.postimg.cc/qM6b1j85/image0.jpg",
+					photo: "",
 				});
 				setSuccessForm((prev) => !prev);
 				console.log(formData);
@@ -195,6 +195,7 @@ function App() {
 					<h2>Working with POST request</h2>
 
 					<form onSubmit={(e) => submit(e)}>
+						<label htmlFor="name">Your name:</label>
 						<input
 							onChange={(e) => handle(e)}
 							value={formData.name}
@@ -206,6 +207,8 @@ function App() {
 							pattern=".{2,60}"
 							title="Username should contain 2-60 characters"
 						/>
+
+						<label htmlFor="email">Email:</label>
 						<input
 							onChange={(e) => handle(e)}
 							value={formData.email}
@@ -214,6 +217,8 @@ function App() {
 							id="email"
 							required
 						/>
+
+						<label htmlFor="phone">Phone:</label>
 						<input
 							onChange={(e) => handle(e)}
 							value={formData.phone}
@@ -224,31 +229,38 @@ function App() {
 							pattern="^\+?\d{10,}$"
 							title="Please enter a valid phone number (at least 10 digits)"
 						/>
+
+						<label htmlFor="position">Position:</label>
 						<input
 							onChange={(e) => handle(e)}
 							value={formData.position}
 							type="text"
-							placeholder="position"
+							placeholder="Position"
 							id="position"
 							maxLength="60"
 							required
 							pattern=".{2,60}"
-							title="position should contain 2-60 characters"
+							title="Position should contain 2-60 characters"
 						/>
 
+						<label htmlFor="photo-upload">Upload photo:</label>
 						<input
 							type="file"
 							accept="image/jpeg, image/jpg"
 							onChange={(e) => handle(e)}
+							id="photo-upload"
 						/>
+
 						{photo && <img src={photo} alt="uploaded photo" />}
 						{photo && (
 							<button onClick={() => setPhoto(null)}>
 								Remove Photo
 							</button>
 						)}
+
 						<button type="submit">Submit</button>
 					</form>
+
 					{successForm && (
 						<div>
 							<p>Success</p> <img src={successImage} />
