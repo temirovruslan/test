@@ -206,7 +206,7 @@ function App() {
 									<img
 										className="card-img"
 										src={user.photo}
-										alt=""
+										alt={`alt=${user.name}'s photo`}
 									/>
 									<p className="cards-name">{user.name}</p>
 									<p className="cards-position">
@@ -273,7 +273,9 @@ function App() {
 							aria-label="Phone number"
 							aria-describedby="phone-help"
 						/>
-						<label className="label-for-phone" htmlFor="phone">+38 (XXX) XXX - XX - XX</label>
+						<label className="label-for-phone" htmlFor="phone">
+							+38 (XXX) XXX - XX - XX
+						</label>
 
 						{/* <span className="phone-example">
 							+38 (XXX) XXX - XX - XX
@@ -337,7 +339,7 @@ function App() {
 
 					{successForm && (
 						<div>
-							<p>Success</p> <img src={successImage} />
+							<p>Success</p> <img src={successImage} alt='successImage' />
 						</div>
 					)}
 				</main>
